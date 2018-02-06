@@ -9,11 +9,27 @@ This modpack provides mods with dynamic display. Mods are :
 - **signs_road**: A mod providing road signs displaying text;
 - **steles**: A mod providing stone steles with text;
 
-For more information, see the [forum topic](https://forum.minetest.net/viewtopic.php?f=11&t=13563) at the Minetest forums.
+For more information, see the [forum topic](https://forum.minetest.net/viewtopic.php?t=19365) at the Minetest forums.
+
+![Presentation image of Display_Modpack](screenshot.png)
 
 ![Presentation image of Display_Modpack](http://pyrollo.github.io/display_modpack/presentation.png)
 
 ## Changelog
+
+### 2018-01-13 (Version 1.0)
+
+- Switch to Epilepsy font by KREATIVE SOFTWARE
+
+- Add settings "default_font"
+
+- Add horizontal alignment
+
+- Add tool for creating font textures from .ttf font files
+
+- Fix UTF 8 to Unicode decoding 
+
+- Updated forum thread link in README.md
 
 ### 2017-12-19
 

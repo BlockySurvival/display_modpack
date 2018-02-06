@@ -19,6 +19,11 @@
 
 display_lib = {}
 
+-- Prefered gap between node and entity
+-- Entity positionment is up to mods but it is a good practice to use this
+-- variable as spacing between entity and node
+display_lib.entity_spacing = 0.002
+
 -- Miscelaneous values depending on wallmounted param2
 local wallmounted_values = {
 	[0]={dx=0,  dz=0,  rx=0,  rz=0,  yaw=0,          rotate=0}, -- Should never be used
@@ -225,5 +230,11 @@ function display_lib.register_display_entity(entity_name)
 	end
 end
 
-
+minetest.register_lbm({
+	label = "Update display_lib entities",
+	name = "display_lib:update_entities",
+	run_at_every_load = true,
+	nodenames = {"group:display_lib_node"},
+	action = function(pos, node) display_lib.update_entities(pos) end,
+})
 

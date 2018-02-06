@@ -21,6 +21,13 @@
 local S = signs.intllib
 local F = function(...) return minetest.formspec_escape(S(...)) end
 
+function signs.set_display_text(pos,text)
+	local meta = minetest.get_meta(pos)
+	meta:set_string("display_text", text)
+	meta:set_string("infotext", "\""..text.."\"")
+	display_lib.update_entities(pos)
+end
+
 function signs.set_formspec(pos)
 	local meta = minetest.get_meta(pos)
 	local ndef = minetest.registered_nodes[minetest.get_node(pos).name]
@@ -30,6 +37,7 @@ function signs.set_formspec(pos)
 
 		if maxlines == 1 then
 			formspec = "size[6,3]"..
+				default.gui_bg .. default.gui_bg_img .. default.gui_slots ..
 				"field[0.5,0.7;5.5,1;display_text;"..F("Text")..";${display_text}]"..
 				"button_exit[2,2;2,1;ok;"..F("Write").."]"
 		else
@@ -39,6 +47,7 @@ function signs.set_formspec(pos)
 			end
 
 			formspec = "size[6,4]"..
+				default.gui_bg .. default.gui_bg_img .. default.gui_slots ..
 				"textarea[0.5,0.7;5.5,2;display_text;"..F("Text")..""..extralabel..";${display_text}]"..
 				"button_exit[2,3;2,1;ok;"..F("Write").."]"
 		end
@@ -49,11 +58,8 @@ end
 
 function signs.on_receive_fields(pos, formname, fields, player)
 	if not minetest.is_protected(pos, player:get_player_name()) then
-		local meta = minetest.get_meta(pos)
 		if fields and (fields.ok or fields.key_enter) then
-			meta:set_string("display_text", fields.display_text)
-			meta:set_string("infotext", "\""..fields.display_text.."\"")
-			display_lib.update_entities(pos)
+			signs.set_display_text(pos, fields.display_text)
 		end
 	end
 end
@@ -125,7 +131,7 @@ end
 -- Generic callback for show_formspec displayed formspecs of "sign" mod
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)
-	local found, _, mod, node_name, pos = formname:find("([%w_]+):([%w_]+)@(.+)")
+	local found, _, mod, node_name, pos = formname:find("^([%w_]+):([%w_]+)@([^:]+)")
 	if found then
 		if mod ~= 'signs' then return end
 
@@ -149,12 +155,12 @@ function signs.register_sign(mod, name, model)
 			fixed = {-model.width/2, -model.height/2, 0.5,
 					 model.width/2, model.height/2, 0.5 - model.depth},
 		},
-		groups = {choppy=2, dig_immediate=2, not_blocking_trains = 1},
+		groups = {choppy=2, dig_immediate=2, not_blocking_trains = 1, display_lib_node = 1},
 		sounds = default.node_sound_defaults(),
 		display_entities = {
 			["signs:display_text"] = {
 					on_display_update = font_lib.on_display_update,
-					depth = 0.499 - model.depth,
+					depth = 0.5 - display_lib.entity_spacing - model.depth,
 					size = { x = model.width, y = model.height },
 					resolution = { x = 64, y = 64 },
 					maxlines = 1,

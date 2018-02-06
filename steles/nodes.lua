@@ -21,17 +21,6 @@
 local S = steles.intllib
 local F = function(...) return minetest.formspec_escape(S(...)) end
 
-function steles.on_receive_fields(pos, formname, fields, player)
-	if not minetest.is_protected(pos, player:get_player_name()) then
-		local meta = minetest.get_meta(pos)
-		if fields and fields.ok then
-			meta:set_string("display_text", fields.display_text)
-			meta:set_string("infotext", "\""..fields.display_text.."\"")
-			display_lib.update_entities(pos)
-		end
-	end
-end
-
 display_lib.register_display_entity("steles:text")
 
 for i, material in ipairs(steles.materials) do
@@ -39,7 +28,9 @@ for i, material in ipairs(steles.materials) do
 	local ndef = minetest.registered_nodes[material]
 
 	if ndef then
+		local groups = table.copy(ndef.groups)
 		local parts = material:split(":")
+		groups.display_lib_node = 1
 
 		minetest.register_node("steles:"..parts[2].."_stele", {
 			description = steles.materials_desc[i],
@@ -55,39 +46,44 @@ for i, material in ipairs(steles.materials) do
 					{-7/16, -0.5, -4/16, 7/16, -4/16, 4/16}
 				}
 			},
-			groups = ndef.groups,
+			groups = groups,
 			display_entities = {
 				["steles:text"] = {
 						on_display_update = font_lib.on_display_update,
-						depth = -2/16-0.001, height = 2/16,
+						depth = -2/16 - display_lib.entity_spacing, height = 2/16,
 						size = { x = 14/16, y = 12/16 },
-						resolution = { x = 144, y = 64 },
+						resolution = { x = 11, y = 5 },
 						maxlines = 3,
 				},
 			},
-			on_place = display_lib.on_place,
+			on_place = function(itemstack, placer, pointed_thing)
+					minetest.rotate_node(itemstack, placer, pointed_thing)
+					display_lib.on_place(itemstack, placer, pointed_thing)
+				end,
 			on_construct = 	function(pos)
-								local meta = minetest.get_meta(pos)
-								meta:set_string("formspec", "size[6,4]"
-									.."textarea[0.5,0.7;5.5,2;display_text;"
-									..F("Displayed text (3 lines max)")
-									..";${display_text}]"
-									.."button_exit[2,3;2,1;ok;"..F("Write").."]")
-								display_lib.on_construct(pos)
-							end,
+					local meta = minetest.get_meta(pos)
+					meta:set_string("formspec", "size[6,4]"
+						..default.gui_bg .. default.gui_bg_img .. default.gui_slots
+						.."textarea[0.5,0.7;5.5,2;display_text;"
+						..F("Displayed text (3 lines max)")
+						..";${display_text}]"
+						.."button_exit[2,3;2,1;ok;"..F("Write").."]")
+					display_lib.on_construct(pos)
+				end,
 			on_destruct = display_lib.on_destruct,
 			on_rotate = display_lib.on_rotate,
 			on_receive_fields = function(pos, formname, fields, player)
-									if not minetest.is_protected(pos, player:get_player_name()) then
-										local meta = minetest.get_meta(pos)
-										if fields and fields.ok then
-											meta:set_string("display_text", fields.display_text)
-											meta:set_string("infotext", "\""..fields.display_text.."\"")
-											display_lib.update_entities(pos)
-										end
-									end
-								end,
-			on_punch = function(pos, node, player, pointed_thing) display_lib.update_entities(pos) end,
+					if not minetest.is_protected(pos, player:get_player_name()) then
+						local meta = minetest.get_meta(pos)
+						if fields and fields.ok then
+							meta:set_string("display_text", fields.display_text)
+							meta:set_string("infotext", "\""..fields.display_text.."\"")
+							display_lib.update_entities(pos)
+						end
+					end
+				end,
+			on_punch = display_lib.update_entities,
 		})
 	end
 end
+
