@@ -13,8 +13,6 @@ For more information, see the [forum topic](https://forum.minetest.net/viewtopic
 
 ![Presentation image of Display_Modpack](screenshot.png)
 
-![Presentation image of Display_Modpack](http://pyrollo.github.io/display_modpack/presentation.png)
-
 ## Changelog
 
 ### 2018-01-13 (Version 1.0)
