@@ -35,25 +35,8 @@ local models = {
 			description = S("Blue street sign"),
 			tiles = { "signs_road_sides.png", "signs_road_sides.png",
 			          "signs_road_sides.png", "signs_road_sides.png",
-			          "signs_road_sides.png", "signs_road_blue_street.png" },
-			inventory_image = "signs_road_blue_street.png",
-		},
-	},
-	large_street_sign = {
-		depth = 1/16,
-		width = 64/16,
-		height = 12/16,
-		entity_fields = {
-			maxlines = 1,
-			color = "#000",
-		},
-		node_fields = {
-		   visual_scale = 1,
-			description = S("Large banner"),
-			tiles = { "signs_road_sides.png", "signs_road_sides.png",
-			          "signs_road_sides.png", "signs_road_sides.png",
-			          "signs_road_sides.png", "signs_road_large_white.png" },
-			inventory_image = "signs_road_white.png",
+			          "signs_road_sides.png", "signs_road_blue_1.png" },
+			inventory_image = "signs_road_blue_1.png",
 		},
 	},
 	red_street_sign = {
@@ -448,4 +431,160 @@ local models = {
 for name, model in pairs(models)
 do
 	signs_api.register_sign("signs_road", name, model)
+end
+
+local bannercolor = {
+	{"black", "Black"},
+	{"red", "Red"},
+	{"green", "Green"},
+	{"cyan", "Cyan"},
+	{"blue", "Blue"},
+	{"magenta", "Magenta"},
+	{"orange", "Orange"},
+	{"violet", "Violet"},
+	{"pink", "Pink"},
+	{"dark_grey", "Dark Grey"},
+	{"dark_green", "Dark Green"},
+	{"brown", "Brown"},
+	{"white", "White"},
+ 	{"yellow", "Yellow"},
+	{"grey", "Grey"},
+}
+
+local color = {
+	{"black", "Black"},
+	{"red", "Red"},
+	{"green", "Green"},
+	{"cyan", "Cyan"},
+	{"blue", "Blue"},
+	{"magenta", "Magenta"},
+	{"orange", "Orange"},
+	{"violet", "Violet"},
+	{"pink", "Pink"},
+	{"dark_grey", "Dark Grey"},
+	{"dark_green", "Dark Green"},
+	{"brown", "Brown"},
+}
+
+local color_blacktext = {
+	{"white", "White"},
+ 	{"yellow", "Yellow"},
+	{"grey", "Grey"},
+}
+
+for _, color in pairs(color) do
+
+	local models_color = {
+		[("large_street_sign_" .. color[1])] = {
+		  depth = 1/16,
+		  width = 64/16,
+		  height = 12/16,
+		  entity_fields = {
+		    resolution = { x = 2.5, y = 1.5 },
+		    maxlines = 1,
+		    color = "#FFFFFF",
+		  },
+		  node_fields = {
+		     visual_scale = 1,
+		    description = color[2] .. " Street Banner",
+		    tiles = {"baked_clay_" .. color[1] ..".png"},
+		    inventory_image = "signs_road_" .. color[1] ..".png",
+				groups = {large_banner = 1},
+		  },
+		},
+	}
+
+	for name, model in pairs(models_color) do
+	signs_api.register_sign("signs_road", name, model)
+	end
+end
+
+for _, color_blacktext in pairs(color_blacktext) do
+	local models_colorblacktext = {
+		[("large_street_sign_" .. color_blacktext[1])] = {
+			depth = 1/16,
+			width = 64/16,
+			height = 12/16,
+			entity_fields = {
+				resolution = { x = 2.5, y = 1.5 },
+				maxlines = 1,
+				color = "#000000",
+			},
+			node_fields = {
+				 visual_scale = 1,
+				description = color_blacktext[2] .. " Street Banner",
+				tiles = {"baked_clay_" .. color_blacktext[1] ..".png"},
+				inventory_image = "signs_road_" .. color_blacktext[1] ..".png",
+				groups = {large_banner = 1},
+			},
+		},
+	}
+
+	for name, model in pairs(models_colorblacktext) do
+	signs_api.register_sign("signs_road", name, model)
+	end
+end
+
+
+for _, color in pairs(color) do
+
+	local models_color = {
+		[("large_street_sign_" .. color[1])] = {
+		  depth = 1/16,
+		  width = 64/16,
+		  height = 12/16,
+		  entity_fields = {
+		    resolution = { x = 2.5, y = 1.5 },
+		    maxlines = 1,
+		    color = "#FFFFFF",
+		  },
+		  node_fields = {
+		     visual_scale = 1,
+		    description = color[2] .. " Street Banner",
+		    tiles = {"baked_clay_" .. color[1] ..".png"},
+		    inventory_image = "signs_road_" .. color[1] ..".png",
+				groups = {large_banner = 1},
+		  },
+		},
+	}
+
+	for name, model in pairs(models_color) do
+	signs_api.register_sign("signs_road", name, model)
+	end
+end
+
+for _, color_blacktext in pairs(color_blacktext) do
+	local models_colorblacktext = {
+		[("large_street_sign_" .. color_blacktext[1])] = {
+			depth = 1/16,
+			width = 64/16,
+			height = 12/16,
+			entity_fields = {
+				resolution = { x = 2.5, y = 1.5 },
+				maxlines = 1,
+				color = "#000000",
+			},
+			node_fields = {
+				 visual_scale = 1,
+				description = color_blacktext[2] .. " Street Banner",
+				tiles = {"baked_clay_" .. color_blacktext[1] ..".png"},
+				inventory_image = "signs_road_" .. color_blacktext[1] ..".png",
+				groups = {large_banner = 1},
+			},
+		},
+	}
+
+	for name, model in pairs(models_colorblacktext) do
+	signs_api.register_sign("signs_road", name, model)
+	end
+end
+
+for _, bannercolor in pairs(bannercolor) do
+
+	minetest.register_craft({
+		output = "signs_road:large_street_sign_" .. bannercolor[1] .. " 1",
+		type = "shapeless",
+		recipe = { "group:large_banner", "dye:" .. bannercolor[1] },
+	})
+
 end
