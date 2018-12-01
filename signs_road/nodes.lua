@@ -70,7 +70,7 @@ local models = {
 			tiles = { "signs_road_sides.png", "signs_road_sides.png",
 			          "signs_road_sides.png", "signs_road_sides.png",
 			          "signs_road_sides.png", "signs_road_white.png" },
-			inventory_image = "signs_road_white.png",
+			inventory_image = "signs_road_white_small.png",
 		},
 	},
 	blue_sign = {
@@ -87,7 +87,7 @@ local models = {
 			tiles = { "signs_road_sides.png", "signs_road_sides.png",
 			          "signs_road_sides.png", "signs_road_sides.png",
 			          "signs_road_sides.png", "signs_road_blue.png" },
-			inventory_image = "signs_road_blue.png",
+			inventory_image = "signs_road_blue_small.png",
 		},
 	},
 	green_sign = {
@@ -104,7 +104,7 @@ local models = {
 			tiles = { "signs_road_sides.png", "signs_road_sides.png",
 			          "signs_road_sides.png", "signs_road_sides.png",
 			          "signs_road_sides.png", "signs_road_green.png" },
-			inventory_image = "signs_road_green.png",
+			inventory_image = "signs_road_green_small.png",
 		},
 	},
 	yellow_sign = {
@@ -121,7 +121,7 @@ local models = {
 			tiles = { "signs_road_sides.png", "signs_road_sides.png",
 			          "signs_road_sides.png", "signs_road_sides.png",
 			          "signs_road_sides.png", "signs_road_yellow.png" },
-			inventory_image="signs_road_yellow.png",
+			inventory_image="signs_road_yellow_small.png",
 		},
 	},
 	red_sign = {
@@ -138,7 +138,7 @@ local models = {
 			tiles = { "signs_road_sides.png", "signs_road_sides.png",
 			          "signs_road_sides.png", "signs_road_sides.png",
 			          "signs_road_sides.png", "signs_road_red.png" },
-			inventory_image = "signs_road_red.png",
+			inventory_image = "signs_road_red_small.png",
 		},
 	},
 	black_right_sign = {
