@@ -2,6 +2,4 @@ default
 intllib?
 bakedclay
 dye
-display_api
-font_api
 signs_api
