@@ -44,6 +44,11 @@ local function on_receive_fields(pos, formname, fields, player)
 	if fields then
 		if fields.ok or fields.key_enter then
 			signs_api.set_display_text(pos, fields.display_text, fields.font)
+			minetest.log('action', ('[boards] %s wrote %q at %s'):format(
+					player:get_player_name(),
+					fields.display_text,
+					minetest.pos_to_string(pos)
+			))
 		end
 		if fields.wipe then
 			signs_api.set_display_text(pos, "", fields.font)
@@ -126,7 +131,7 @@ minetest.register_craft(
 		output = "boards:black_board",
 		recipe = {
 			{"group:wood", "group:stone", "dye:black"},
-		}		
+		}
 	})
 
 minetest.register_craft(
@@ -134,6 +139,6 @@ minetest.register_craft(
 		output = "boards:green_board",
 		recipe = {
 			{"group:wood", "group:stone", "dye:dark_green"},
-		}		
+		}
 	})
 

@@ -96,6 +96,12 @@ local function on_receive_fields_poster(pos, formname, fields, player)
 				meta:set_string("infotext", "\""..fields.display_text
 						.."\"\n"..S("(right-click to read more text)"))
 				display_api.update_entities(pos)
+				minetest.log('action', ('[poster] %s wrote %q %q at %s'):format(
+						player:get_player_name(),
+						fields.display_text,
+						fields.text,
+						minetest.pos_to_string(pos)
+				))
 			end
 			if (fields.write or fields.key_enter) then
 				display_poster(pos, node, player)

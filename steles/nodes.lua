@@ -82,6 +82,11 @@ for i, material in ipairs(steles.materials) do
 							meta:set_string("display_text", fields.display_text)
 							meta:set_string("infotext", "\""..fields.display_text.."\"")
 							display_api.update_entities(pos)
+							minetest.log('action', ('[signs_api] %s wrote %q at %s'):format(
+									player:get_player_name(),
+									fields.display_text,
+									minetest.pos_to_string(pos)
+							))
 						end
 						if fields.font then
 							font_api.show_font_list(player, pos)
