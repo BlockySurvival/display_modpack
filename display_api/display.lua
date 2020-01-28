@@ -290,7 +290,7 @@ function display_api.on_rotate(pos, node, user, _, new_param2)
 	if not ov then
 		return
 	end
-	
+
 	if ov.restricted or not display_api.is_rotation_restricted() then
 		minetest.swap_node(pos, node)
 		display_api.update_entities(pos)

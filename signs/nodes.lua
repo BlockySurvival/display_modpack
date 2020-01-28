@@ -215,6 +215,11 @@ local models = {
 			groups= { dig_immediate = 3 },
 			on_construct = display_api.on_construct,
 			on_rightclick = display_poster,
+			on_punch = function(pos, node, player, pointed_thing)
+				local meta = minetest.get_meta(pos)
+				meta:set_string("formspec", "")
+				display_api.update_entities(pos)
+			end,
 			on_receive_fields = on_receive_fields_poster,
 		},
 	},
