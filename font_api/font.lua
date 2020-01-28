@@ -107,7 +107,21 @@ end
 -- @return Remaining string without this first char
 
 function Font:get_next_char(text)
-	local bytes = get_char_bytes(text)
+	local bytes
+	local codepoint
+	local hexa, codepointstr = string.match(text, "^&#(x?)([0123456789abcdef]+);")
+	if codepointstr ~= nil then
+		if hexa == 'x' then
+			bytes = 4+#codepointstr
+			codepoint = tonumber(codepointstr, 16)
+		else
+			bytes = 3+#codepointstr
+			codepoint = tonumber(codepointstr)
+		end
+	else
+		bytes = get_char_bytes(text)
+		codepoint = char_to_codepoint(text)
+	end
 
 	if bytes == nil then
 		minetest.log("warning",
