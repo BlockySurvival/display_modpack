@@ -34,16 +34,16 @@ local function display_poster(pos, node, player)
 
 	-- Title texture
 	local titletexture = font:render(meta:get_string("display_text"),
-		font:get_height()*8.4, font:get_height(), { lines = 1, color = "#FFFFFF"})
+		font:get_height()*8.4, font:get_height(), { lines = 1, color = "#000"})
 
 	fs = string.format([=[
 		size[7,9]bgcolor[#0000]
 		background[0,0;7,9;signs_poster_formspec.png]
 		image[0,-0.2;8.4,2;%s]
-		style_type[textarea;textcolor=#111]
+		style_type[textarea;textcolor=#000]
 		textarea[0.3,1.5;7,8;;%s;]]=],
 		titletexture,
-		minetest.colorize("#EEE",
+		minetest.colorize("#000",
 			minetest.formspec_escape(meta:get_string("text"))))
 
 	if minetest.is_protected(pos, player:get_player_name()) then
