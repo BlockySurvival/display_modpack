@@ -427,6 +427,58 @@ local models = {
 	},
 }
 
+-- Color of banners and their font color
+local color = {
+	{"black", "Black", "#FFF"},
+	{"red", "Red", "#FFF"},
+	{"green", "Green", "#FFF"},
+	{"cyan", "Cyan", "#FFF"},
+	{"blue", "Blue", "#FFF"},
+	{"magenta", "Magenta", "#FFF"},
+	{"orange", "Orange", "#FFF"},
+	{"violet", "Violet", "#FFF"},
+	{"pink", "Pink", "#FFF"},
+	{"dark_grey", "Dark Grey", "#FFF"},
+	{"dark_green", "Dark Green", "#FFF"},
+	{"brown", "Brown", "#FFF"},
+	{"white", "White", "#000"},
+ 	{"yellow", "Yellow", "#000"},
+	{"grey", "Grey", "#000"},
+}
+
+for _, color in pairs(color) do
+	local models_color = {
+		[("large_street_sign_" .. color[1])] = {
+			depth = 1/16,
+			width = 64/16,
+			height = 12/16,
+			entity_fields = {
+				maxlines = 1,
+				color = color[3],
+			},
+			node_fields = {
+			   visual_scale = 1,
+				description = color[2] .. " Street Banner",
+				tiles = {"baked_clay_" .. color[1] ..".png"},
+				inventory_image = "signs_road_" .. color[1] .. ".png",
+				groups = {large_banner = 1},
+			},
+		},
+	}
+	-- Register the sign with white font
+	for name, model in pairs(models_color) do
+		signs_api.register_sign("signs_road", name, model)
+	end
+end
+
+for _, color in pairs(color) do
+	minetest.register_craft({
+		output = "signs_road:large_street_sign_" .. color[1] .. " 1",
+		type = "shapeless",
+		recipe = { "group:large_banner", "dye:" .. color[1] },
+	})
+end
+
 -- Node registration
 for name, model in pairs(models)
 do
